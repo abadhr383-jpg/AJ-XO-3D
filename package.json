@@ -1,0 +1,19 @@
+{
+  "name": "aj-xo-3d",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AJ XO 3D — 3D Tic-Tac-Toe built with HTML5, CSS3 and JavaScript",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "node test/logic.test.js",
+    "build:web": "node build-web.js",
+    "cap:add": "npx cap add android",
+    "cap:sync": "npm run build:web && npx cap sync android",
+    "cap:open": "npx cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  }
+}

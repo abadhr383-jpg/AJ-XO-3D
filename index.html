@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#04050d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>AJ XO 3D</title>
+<link rel="manifest" href="assets/manifest.json">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="neon">
+<canvas id="bg" aria-hidden="true"></canvas>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<main id="app">
+
+  <!-- ===== MENU ===== -->
+  <section class="screen active" id="screen-menu">
+    <button class="icon-btn corner" id="muteBtn" data-action="mute" aria-label="Sound">🔊</button>
+    <div class="logo" role="img" aria-label="AJ XO 3D">
+      <div class="logo-aj" aria-hidden="true">
+        <span class="e e4">AJ</span><span class="e e3">AJ</span><span class="e e2">AJ</span><span class="e e1">AJ</span><span class="front">AJ</span>
+      </div>
+      <div class="logo-sub" aria-hidden="true"><span class="lx">X</span><span class="lo">O</span><span class="l3">3D</span></div>
+    </div>
+    <p class="tagline" data-i18n="tagline"></p>
+    <nav class="menu-list">
+      <button class="btn primary big" data-action="go-ai"><span class="ico">🤖</span><span data-i18n="playAI"></span></button>
+      <button class="btn big" data-action="go-pvp"><span class="ico">👥</span><span data-i18n="playPvP"></span></button>
+      <button class="btn" data-action="go-stats"><span class="ico">📊</span><span data-i18n="stats"></span></button>
+      <button class="btn" data-action="go-settings"><span class="ico">⚙️</span><span data-i18n="settings"></span></button>
+    </nav>
+    <footer class="foot">AJ XO 3D · v1.0</footer>
+  </section>
+
+  <!-- ===== AI SETUP ===== -->
+  <section class="screen" id="screen-setup">
+    <header class="topbar">
+      <button class="icon-btn" data-action="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h5v-6h3v6h5V10"/></svg></button>
+      <h2 data-i18n="chooseLevel"></h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="panel">
+      <div class="levels" id="levels">
+        <button class="level" data-level="easy"><span class="lv-name" data-i18n="easy"></span><small data-i18n="easyD"></small><span class="stars">★☆☆</span></button>
+        <button class="level" data-level="medium"><span class="lv-name" data-i18n="medium"></span><small data-i18n="mediumD"></small><span class="stars">★★☆</span></button>
+        <button class="level" data-level="hard"><span class="lv-name" data-i18n="hard"></span><small data-i18n="hardD"></small><span class="stars">★★★</span></button>
+      </div>
+      <h3 data-i18n="yourSide"></h3>
+      <div class="sides">
+        <button class="side x" data-side="X">X</button>
+        <button class="side o" data-side="O">O</button>
+      </div>
+      <p class="hint" data-i18n="firstNote"></p>
+      <button class="btn primary big" data-action="start-ai"><span data-i18n="start"></span></button>
+    </div>
+  </section>
+
+  <!-- ===== GAME ===== -->
+  <section class="screen" id="screen-game">
+    <header class="topbar">
+      <button class="icon-btn" data-action="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h5v-6h3v6h5V10"/></svg></button>
+      <h2 id="modeLabel"></h2>
+      <button class="icon-btn" data-action="restart" aria-label="Restart"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5"/></svg></button>
+    </header>
+    <div class="scoreboard">
+      <div class="score" id="score1"><span class="sym" id="sym1"></span><b id="name1"></b><em id="n1">0</em></div>
+      <div class="score mid"><span class="sym">=</span><b data-i18n="draws"></b><em id="nd">0</em></div>
+      <div class="score" id="score2"><span class="sym" id="sym2"></span><b id="name2"></b><em id="n2">0</em></div>
+    </div>
+    <div class="turn" id="turn" aria-live="polite"></div>
+    <div class="stage"><div class="board" id="board"></div></div>
+  </section>
+
+  <!-- ===== STATS ===== -->
+  <section class="screen scroll" id="screen-stats">
+    <header class="topbar">
+      <button class="icon-btn" data-action="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h5v-6h3v6h5V10"/></svg></button>
+      <h2 data-i18n="stats"></h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="panel" id="statsBody"></div>
+    <div class="panel"><button class="btn danger" data-action="reset-stats"><span data-i18n="resetStats"></span></button></div>
+  </section>
+
+  <!-- ===== SETTINGS ===== -->
+  <section class="screen scroll" id="screen-settings">
+    <header class="topbar">
+      <button class="icon-btn" data-action="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5M5.5 10v10h5v-6h3v6h5V10"/></svg></button>
+      <h2 data-i18n="settings"></h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="panel">
+      <div class="row"><span data-i18n="sound"></span><button class="switch" role="switch" data-setting="sound"></button></div>
+      <div class="row"><span data-i18n="music"></span><button class="switch" role="switch" data-setting="music"></button></div>
+      <div class="row col"><span data-i18n="volume"></span><input type="range" id="vol" min="0" max="100" step="1"></div>
+      <div class="row"><span data-i18n="vibration"></span><button class="switch" role="switch" data-setting="vibe"></button></div>
+      <div class="row"><span data-i18n="tilt"></span><button class="switch" role="switch" data-setting="tilt"></button></div>
+      <div class="row col"><span data-i18n="language"></span>
+        <div class="seg" id="langSeg"><button data-lang="ar">العربية</button><button data-lang="en">English</button></div>
+      </div>
+      <div class="row col"><span data-i18n="colors"></span>
+        <div class="swatches" id="swatches">
+          <button data-theme="neon" style="--a:#00d4ff;--b:#9b5cff" aria-label="Neon"></button>
+          <button data-theme="sunset" style="--a:#ff4d8d;--b:#ffb454" aria-label="Sunset"></button>
+          <button data-theme="matrix" style="--a:#29ffa0;--b:#00b3ff" aria-label="Matrix"></button>
+          <button data-theme="ember" style="--a:#ffd166;--b:#ff5d5d" aria-label="Ember"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== RESULT MODAL ===== -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-card" id="modalCard" role="dialog" aria-modal="true" aria-labelledby="resTitle">
+    <div class="badge" id="resBadge"></div>
+    <h2 id="resTitle"></h2>
+    <p id="resText"></p>
+    <div class="modal-actions">
+      <button class="btn primary" id="replayBtn" data-action="replay"><span data-i18n="replay"></span></button>
+      <button class="btn" data-action="menu"><span data-i18n="mainMenu"></span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONFIRM ===== -->
+<div class="modal" id="confirm" aria-hidden="true">
+  <div class="modal-card small" role="alertdialog" aria-modal="true">
+    <p id="confirmMsg"></p>
+    <div class="modal-actions">
+      <button class="btn danger" id="confirmYes"><span data-i18n="yes"></span></button>
+      <button class="btn" id="confirmNo"><span data-i18n="cancel"></span></button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "appId": "com.aj.xo3d",
+  "appName": "AJ XO 3D",
+  "webDir": "www",
+  "backgroundColor": "#04050d",
+  "android": { "allowMixedContent": false },
+  "server": { "androidScheme": "https" }
+}
